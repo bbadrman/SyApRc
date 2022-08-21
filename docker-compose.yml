@@ -3,7 +3,7 @@ services:
   web:
     build: ./
     ports:
-      - "80:80"
+      - "86:80"
     depends_on:
       - db
     expose:
@@ -13,7 +13,7 @@ services:
       - ./local/php.ini:/usr/local/etc/php/php.ini
       - ./local/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
     networks:
-      - test_network
+      - syaprc_network
 
 
   db:
@@ -23,28 +23,28 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: test_db
-      MYSQL_USER: 123456
-      MYSQL_PASSWORD: yassine
+      MYSQL_DATABASE: syaprc_db
+      MYSQL_USER: badr
+      MYSQL_PASSWORD: 123456
     volumes:
       - "./db:/var/lib/mysql"
     networks:
-      - test_network
+      - syaprc_network
 
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
-      - '8080:80'
+      - '8680:80'
     restart: always
     environment:
       PMA_HOST: db
     depends_on:
       - db
     networks:
-      - test_network
+      - syaprc_network
 
 
 networks:
-  test_network:
+  syaprc_network:
     driver: bridge
